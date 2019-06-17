@@ -1,8 +1,8 @@
 /*
- * IJKMediaPlayer.h
+ * IJKSDLGLViewProtocol.h
  *
- * Copyright (c) 2013 Bilibili
- * Copyright (c) 2013 Zhang Rui <bbcallen@gmail.com>
+ * Copyright (c) 2017 Bilibili
+ * Copyright (c) 2017 raymond <raymondzheng1412@gmail.com>
  *
  * This file is part of ijkPlayer.
  *
@@ -21,12 +21,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#import "IJKMediaPlayback.h"
-#import "IJKMPMoviePlayerController.h"
+#ifndef IJKSDLGLViewProtocol_h
+#define IJKSDLGLViewProtocol_h
 
-#import "IJKFFOptions.h"
-#import "IJKFFMoviePlayerController.h"
+#import <UIKit/UIKit.h>
 
-#import "IJKAVMoviePlayerController.h"
+typedef struct IJKOverlay IJKOverlay;
+struct IJKOverlay {
+    int w;
+    int h;
+    UInt32 format;
+    int planes;
+    UInt16 *pitches;
+    UInt8 **pixels;
+    int sar_num;
+    int sar_den;
+    CVPixelBufferRef pixel_buffer;
+};
 
-#import "IJKMediaModule.h"
+@protocol IJKSDLGLViewProtocol <NSObject>
+- (UIImage*) snapshot;
+@property(nonatomic, readonly) CGFloat  fps;
+@property(nonatomic)        CGFloat  scaleFactor;
+@property(nonatomic)        BOOL  isThirdGLView;
+- (void) display_pixels: (IJKOverlay *) overlay;
+@end
+
+#endif /* IJKSDLGLViewProtocol_h */
